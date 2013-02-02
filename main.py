@@ -16,7 +16,7 @@
 #
 import webapp2
 import urlparse
-import simplejson as json
+from django.utils import simplejson as json
 import models
 
 class MainHandler(webapp2.RequestHandler):
