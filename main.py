@@ -53,6 +53,14 @@ class ShortenURLHandler(webapp2.RequestHandler):
       # Parse base URI
       baseURI = urlparse.urlparse(self.request.url)
       shortURL = baseURI.scheme + "://" + baseURI.netloc + "/" + str(shortCode)
+      # If uri exists, return false
+      
+      shortLink = models.ShortLink.all().filter('ShortURL = ', shortURL).get()
+      if shortLink != None:
+        returnData.success = false
+        self.response.write(returnData)
+        return
+        
       returnData = {
         'success': True,
         'short_code': shortURL

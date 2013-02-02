@@ -14,6 +14,16 @@ http://jjbshort.appspot.com
 ### Tradeoffs ###
 
 
+### What's missing ###
+
+* Refactoring of code to enforce SOLID design principles
+* Unit Tests
+* Proper 6 character alpha numeric code generator
+* More robust validation on URLs
+* Better documentation
+* Better error handling on generating redirect and post
+* Catch all 404 for invalid URIs
+* REST API version header
 
 ### Testing ###
 ```
