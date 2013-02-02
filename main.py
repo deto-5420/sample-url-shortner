@@ -15,6 +15,7 @@
 # limitations under the License.
 #
 import webapp2
+import simplejson as json
 
 class MainHandler(webapp2.RequestHandler):
   def get(self):
@@ -22,7 +23,24 @@ class MainHandler(webapp2.RequestHandler):
 
 class ShortenURLHandler(webapp2.RequestHandler):
   def get(self):
-    self.response.write('short')
+    self.response.write('Shorten URL')
+  def post(self):
+    # Parse Inputs {long_url:..., custom_short_code(optional): ...} 
+    data = None
+    try: 
+      data = json.loads(self.request.body)
+    except Exception, error:
+      self.response.write(error)
+    # Check Data 
+    
+    # Generate Response  {success: true/false, short_code}
+    self.response.write(data)
+    
+class CustomShortCodeHandler(webapp2.RequestHandler):
+  def get(self):
+    self.response.write('Custom Short Code')
+  def post(self):   
+    self.response.write('Custom Short Code')
 
 class NotFoundPageHandler(webapp2.RequestHandler):
   def head(self):
@@ -38,5 +56,6 @@ class NotFoundPageHandler(webapp2.RequestHandler):
 app = webapp2.WSGIApplication([
   ('/', MainHandler),
   ('/shorten_url', ShortenURLHandler),
+  ('/*', CustomShortCodeHandler),
   ('/*', NotFoundPageHandler)
 ], debug=True)
