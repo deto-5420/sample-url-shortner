@@ -29,6 +29,9 @@ class ShortenURLHandler(webapp2.RequestHandler):
   def post(self):
     # Parse Inputs {long_url:..., custom_short_code(optional): ...} 
     data = None
+    returnData = {
+      'success': False
+    }
     try: 
       data = json.loads(self.request.body)
       counterModel = models.Counter.get_or_insert('SHORT')
@@ -40,7 +43,7 @@ class ShortenURLHandler(webapp2.RequestHandler):
       if type(data) is dict and data.has_key('long_url') and len(data['long_url']) > 0:
         # make the URL short
         originalURL = str(data['long_url'])
-        shortCode = counterModel.ShortCounter
+        shortCode = hex(counterModel.ShortCounter)
       
       # Handle custom code  
       if type(data) is dict and data.has_key('custom_short_code') and len(data['custom_short_code']) > 0:
@@ -68,10 +71,11 @@ class ShortenURLHandler(webapp2.RequestHandler):
       self.response.write(returnData)
       return
     except Exception, error:
-      self.response.write(error)
+
+      self.response.write(returnData)
       return
-    
-    self.response.write(data)
+
+    self.response.write(returnData)
     return
     
 class CustomShortCodeHandler(webapp2.RequestHandler):
