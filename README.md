@@ -13,6 +13,10 @@ http://jjbshort.appspot.com
 
 ### Tradeoffs ###
 
+- Using an in memory database would be beneficial for tracking multiple links that get submitted and mapping them to a single short URL code.  Redis/MemCache offer significantly faster read/write times than disk and could be used to improve performance and user experience.
+
+Redirects 
+- GAE's redirect with permanent=True flag command uses a 301 redirect to forward you to the new URI.  the 302 redirect will update your page but not change the address bar which may cause confusion to users.  They may believe that the URL shortner is hosting the content when it's not.
 
 ### What's missing ###
 

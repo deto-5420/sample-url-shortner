@@ -92,7 +92,7 @@ class CustomShortCodeHandler(webapp2.RequestHandler):
       shortLink = models.ShortLink.all().filter('ShortURL = ', self.request.uri).get()
       if shortLink == None:
         self.response.write('Short URL not found')
-      self.redirect(str(shortLink.OriginalURL))
+      self.redirect(str(shortLink.OriginalURL), permanent=True)
       return
     except Exception, error:
       self.response.write(error)
