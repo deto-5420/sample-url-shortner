@@ -17,9 +17,26 @@
 import webapp2
 
 class MainHandler(webapp2.RequestHandler):
-    def get(self):
-        self.response.write('Hello world!')
+  def get(self):
+    self.response.write('JJB Short!')
+
+class ShortenURLHandler(webapp2.RequestHandler):
+  def get(self):
+    self.response.write('short')
+
+class NotFoundPageHandler(webapp2.RequestHandler):
+  def head(self):
+    self.get()
+    self.response.clear()
+  def get(self):
+    self.error(404)
+    self.response.write('404')
+  def post(self):
+    self.error(404)
+    self.response.write('404')    
 
 app = webapp2.WSGIApplication([
-    ('/', MainHandler)
+  ('/', MainHandler),
+  ('/shorten_url', ShortenURLHandler),
+  ('/*', NotFoundPageHandler)
 ], debug=True)
