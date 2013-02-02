@@ -1,5 +1,8 @@
 # GitIgnore Sources - https://github.com/github/gitignore
 
+# Python
+*.py[cod]
+
 # Textmate
 *.tmproj
 *.tmproject

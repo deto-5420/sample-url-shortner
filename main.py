@@ -98,6 +98,7 @@ class CustomShortCodeHandler(webapp2.RequestHandler):
       self.response.write(error)
       return
 
+
 app = webapp2.WSGIApplication([
   ('/', MainHandler),
   ('/shorten_url', ShortenURLHandler),
