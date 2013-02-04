@@ -35,4 +35,8 @@ $ sudo easy_install gaetestbed
 $ sudo easy_install nose
 $ sudo easy_install nosegae
 $ sudo easy_install webtest
+
+# There is a bug with GAE test case so you need to remove /usr/local/bin/dev_appserver.pyc before every test case run
+$ rm /usr/local/bin/dev_appserver.pyc
+$ nosetests --with-gae
 ```

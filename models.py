@@ -6,4 +6,4 @@ class ShortLink(db.Model):
   ShortURL = db.StringProperty(default="")
   
 class Counter(db.Model):
-  ShortCounter = db.IntegerProperty(default=1048576, required=True)
+  ShortCounter = db.IntegerProperty(default=60466176, required=True)

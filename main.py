@@ -14,14 +14,20 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
+import os
 import webapp2
 import urlparse
 from django.utils import simplejson as json
+from google.appengine.ext.webapp import template
 import models
 
 class MainHandler(webapp2.RequestHandler):
   def get(self):
-    self.response.write('JJB Short!')
+    values = {
+      'title': 'jjbshort'
+    }
+    path = os.path.join(os.path.dirname(__file__), 'web/index.html')
+    self.response.out.write(template.render(path, values, False))
 
 class ShortenURLHandler(webapp2.RequestHandler):
   def get(self):
@@ -32,8 +38,15 @@ class ShortenURLHandler(webapp2.RequestHandler):
     returnData = {
       'success': False
     }
-    try: 
-      data = json.loads(self.request.body)
+    try:
+      data = None
+      if self.request.get("long_url") != None:
+        data = dict()
+        data['long_url'] = self.request.get("long_url")
+        data['custom_short_code'] = self.request.get("custom_short_code")
+      else:
+        data = json.loads(self.request.body)
+      
       counterModel = models.Counter.get_or_insert('SHORT')
       shortCode = None
       notCustomCode = True
@@ -43,7 +56,7 @@ class ShortenURLHandler(webapp2.RequestHandler):
       if type(data) is dict and data.has_key('long_url') and len(data['long_url']) > 0:
         # make the URL short
         originalURL = str(data['long_url'])
-        shortCode = hex(counterModel.ShortCounter)
+        shortCode = base36encode(counterModel.ShortCounter)
       
       # Handle custom code  
       if type(data) is dict and data.has_key('custom_short_code') and len(data['custom_short_code']) > 0:
@@ -79,12 +92,35 @@ class ShortenURLHandler(webapp2.RequestHandler):
       self.response.write(returnData)
       return
     except Exception, error:
-
+      returnData['exception'] = error
       self.response.write(returnData)
       return
 
     self.response.write(returnData)
     return
+  def base36encode(number, alphabet='0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ'):
+    """Converts an integer to a base36 string."""
+    if not isinstance(number, (int, long)):
+      raise TypeError('number must be an integer')
+
+    base36 = ''
+    sign = ''
+
+    if number < 0:
+      sign = '-'
+      number = -number
+
+    if 0 <= number < len(alphabet):
+      return sign + alphabet[number]
+
+    while number != 0:
+      number, i = divmod(number, len(alphabet))
+      base36 = alphabet[i] + base36
+
+    return sign + base36
+
+  def base36decode(number):
+    return int(number, 36)
     
 class CustomShortCodeHandler(webapp2.RequestHandler):
   def get(self):

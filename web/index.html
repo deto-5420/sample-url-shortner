@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title></title>
+  <link rel="stylesheet" href="a/bs/css/bootstrap.min.css"/>
+  <link rel="stylesheet" href="a/bs/css/bootstrap-responsive.min.css"/>
+  <link rel="stylesheet" href="a/fa/css/font-awesome.min.css"/>
+  <link rel="stylesheet" href="a/js/css/style.css"/>
+  <script style="text/javascript" src="a/js/js/jquery.js"></script>
+  <script style="text/javascript" src="a/js/js/jquery.form.min.js"></script>
+  <script style="text/javascript" src="a/js/js/parsley.min.js"></script>
+  <script style="text/javascript" src="a/js/js/main.js"></script>
+  <script style="text/javascript" src="http://use.edgefonts.net/ubuntu-mono:n4,i4,n7,i7.js"></script>
+</head>
+<body>
+  <div class="container-fluid">
+    <div class="row-fluid">
+      <div class="row">
+        <div class="span10 offset1">
+          <div class="well">
+            <div class="row center-text">
+              <h3>jjbshort</h3>
+            </div>
+            <div class="controls controls-row">
+              <form id="short-form" data-validate="parsley" method="POST" action="shorten_url">
+                <div class="span6">
+                  <input class="input-block-level" type="text" data-type="urlstrict" data-trigger="focusin focusout" data-required="true" placeholder="URL to shorten" name="long_url" id="long_url" value="http://www.gmail.com">
+                </div>
+                <div class="span4">
+                  <input class="input-block-level" type="text" data-type="alphanum" data-trigger="focusin focusout" data-validation-minlength="6" data-minwords="6" placeholder="Optional Code" name="custom_short_code" id="custom_short_code">
+                </div>
+                <button class="btn btn-primary span2" type="submit">Search</button>
+              </form>
+            </div>
+            <div class="row center-text">
+              <p><a href="https://github.com/joeblau/jjbshort"><i class="icon-github"></i> Source</a></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
