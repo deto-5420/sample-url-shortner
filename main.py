@@ -56,7 +56,9 @@ class ShortenURLHandler(webapp2.RequestHandler):
       if type(data) is dict and data.has_key('long_url') and len(data['long_url']) > 0:
         # make the URL short
         originalURL = str(data['long_url'])
-        shortCode = base36encode(counterModel.ShortCounter)
+        # shortCode = hex(counterModel.ShortCounter) 
+        longNumCounter = long(counterModel.ShortCounter)
+        shortCode = Base36().base36encode(longNumCounter)
       
       # Handle custom code  
       if type(data) is dict and data.has_key('custom_short_code') and len(data['custom_short_code']) > 0:
@@ -98,30 +100,26 @@ class ShortenURLHandler(webapp2.RequestHandler):
 
     self.response.write(returnData)
     return
-  def base36encode(number, alphabet='0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ'):
-    """Converts an integer to a base36 string."""
+    
+class Base36():
+  def base36encode(self, number):
     if not isinstance(number, (int, long)):
       raise TypeError('number must be an integer')
+    if number < 0:
+      raise ValueError('number must be positive')
+
+    alphabet = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ'
 
     base36 = ''
-    sign = ''
-
-    if number < 0:
-      sign = '-'
-      number = -number
-
-    if 0 <= number < len(alphabet):
-      return sign + alphabet[number]
-
-    while number != 0:
-      number, i = divmod(number, len(alphabet))
+    while number:
+      number, i = divmod(number, 36)
       base36 = alphabet[i] + base36
 
-    return sign + base36
+    return base36 or alphabet[0]
 
-  def base36decode(number):
-    return int(number, 36)
-    
+  def base36decode(self, number):
+    return int(number,36)
+            
 class CustomShortCodeHandler(webapp2.RequestHandler):
   def get(self):
     try:
