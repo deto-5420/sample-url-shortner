@@ -54,13 +54,13 @@ class ShortenURLHandler(webapp2.RequestHandler):
         OriginalURL=urlShort.getOriginalURL(),
         ShortCode=urlShort.getShortCode()
       ).put()
-      self.response.write(returnData)
+      self.response.write(json.dumps(returnData))
       return
     except Exception, error:
       returnData['exception'] = error
-      self.response.write(returnData)
+      self.response.write(json.dumps(returnData))
       return
-    self.response.write(returnData)
+    self.response.write(json.dumps(returnData))
     return
             
 class CustomShortCodeHandler(webapp2.RequestHandler):

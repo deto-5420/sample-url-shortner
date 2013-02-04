@@ -34,3 +34,6 @@ input.parsley-error, textarea.parsley-error {
 .parsley-error-list{
   color: #B94A48 !important;
 }
+#myModalLabel {
+  color: #282a2e;
+}

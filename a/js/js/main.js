@@ -8,15 +8,11 @@
 
 $(document).ready(function() {
   $('#short-form').ajaxForm({
-    beforeSubmit: function(arr, $form, options){
-      // console.log(arr);
-//      $("#submit-button").button('loading');
-      return true;
-    },
-    success: function(responseText) {
-//      $('#myModalBody').html(JSON.stringify(responseText, null, '<br>'));
-//      $('#myModal').modal();
-//      $("#submit-button").button('reset');
+    dataType:  'json',
+    success: function(data) {
+     $('#myModalBody').html(window.location + data.short_code);
+     $('#myModal').modal();
+     $('#short-form').resetForm();
     }
   });
 

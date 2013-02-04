@@ -32,7 +32,13 @@ class URLShort():
   
   def getShortCode(self):
     return self.shortCode
-      
+  
+  def doesShortCodeExist(self):
+    shortLink = models.ShortLink.all().filter('ShortCode = ', self.shortCode).get()
+    if shortLink != None:
+      return True
+    return False
+          
   def processHasOriginalURL(self, longURLData):
     if type(longURLData) is dict and longURLData.has_key('long_url') and len(longURLData['long_url']) > 0:
       # make the URL short
